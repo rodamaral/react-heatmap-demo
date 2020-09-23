@@ -4,7 +4,7 @@ import './App.css'
 import Routes from './pages/Routes'
 
 export default function App() {
-    useTitle('react-redux-cra-starter-template') // TODO
+    useTitle('Mapa de calor de residências')
 
     return (
         <main>
