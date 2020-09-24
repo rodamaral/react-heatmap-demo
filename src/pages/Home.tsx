@@ -4,7 +4,8 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import 'leaflet/dist/leaflet.css'
-import React, { useEffect, useState } from 'react'
+import { useSnackbar } from 'notistack'
+import React, { useCallback, useEffect, useState } from 'react'
 import Dialog from '../components/Dialog'
 import Map from '../components/Map'
 import { getResidences } from '../services/residences'
@@ -35,6 +36,7 @@ export default function Home() {
     const classes = useStyles()
     const [open, setOpen] = useState(false)
     const [data, setData] = useState<Array<IData>>([])
+    const { enqueueSnackbar } = useSnackbar()
 
     const handleClickOpen = () => {
         setOpen(true)
@@ -44,17 +46,18 @@ export default function Home() {
         setOpen(false)
     }
 
-    const loadData = async () => {
+    const loadData = useCallback(async () => {
         try {
             setData(await getResidences())
         } catch (error) {
             console.error(error)
+            enqueueSnackbar('Desculpe... Houve um erro de conexão', { variant: 'error' })
         }
-    }
+    }, [enqueueSnackbar])
 
     useEffect(() => {
         loadData()
-    }, [])
+    }, [loadData])
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>

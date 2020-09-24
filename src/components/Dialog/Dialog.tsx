@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import { useSnackbar } from 'notistack'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { postResidence } from '../../services/residences'
 import Coordinate from '../Coordinate/Coordinate'
 import MaskedTextField from '../MaskedTextField'
 
@@ -46,44 +47,28 @@ export default function FormDialog({ open, handleClose, loadData }: FormDialogPr
     const { enqueueSnackbar } = useSnackbar()
     const { register, handleSubmit, errors } = useForm<Inputs>()
 
-    const onSubmit = (data: InputsString) => {
-        let foo
+    const onSubmit = async (data: InputsString) => {
+        let convertedData
         try {
-            foo = convert(data)
-            console.log('onSubmit', foo)
+            convertedData = convert(data)
+            console.log('onSubmit', convertedData)
         } catch (error) {
             console.error(error)
+            enqueueSnackbar('Erro de validação', { variant: 'error' })
             return
         }
 
-        setStatus('pending')
-        fetch(
-            'http://localhost:3001/residences', // FIXME .env
-            {
-                method: 'POST',
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin', // include, *same-origin, omit
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(foo),
-            }
-        )
-            .then((res) => res.json())
-            .then((res) => {
-                setStatus('success')
-                console.log('res', res)
-                enqueueSnackbar('Dados cadastrados com sucesso', { variant: 'success' })
-                loadData()
-            })
-            .catch((error) => {
-                setStatus('error')
-                enqueueSnackbar('Erro ao salvar dados', { variant: 'error' })
-                console.error(error)
-            })
+        try {
+            setStatus('pending')
+            await postResidence(convertedData)
+            setStatus('success')
+            enqueueSnackbar('Dados cadastrados com sucesso', { variant: 'success' })
+            loadData()
+        } catch (error) {
+            setStatus('error')
+            enqueueSnackbar('Erro ao salvar dados', { variant: 'error' })
+            console.error(error)
+        }
     }
 
     return (
