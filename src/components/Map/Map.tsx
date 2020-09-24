@@ -7,11 +7,17 @@ import './Map.styles'
 const position = { lat: 51.505, lng: -0.09 }
 
 const MapWrapper = ({ data }: { data: any }) => (
-    <Map style={{ width: '100%', height: '100%' }} center={position} zoom={13}>
+    <Map
+        style={{ width: '100%', height: '100%' }}
+        center={position}
+        zoom={13}
+        onclick={(event) => console.log('event', event)}
+    >
         <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
+
         <Marker position={position}>
             <Popup>
                 A pretty CSS3 popup.

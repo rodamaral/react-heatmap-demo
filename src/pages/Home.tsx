@@ -43,7 +43,7 @@ export default function Home() {
         setOpen(false)
     }
 
-    useEffect(() => {
+    const loadData = () => {
         fetch('http://localhost:3001/residences') // FIXME .env
             .then((res) => res.json())
             .then((res) => {
@@ -52,6 +52,10 @@ export default function Home() {
             .catch((error) => {
                 console.error(error)
             })
+    }
+
+    useEffect(() => {
+        loadData()
     }, [])
 
     return (
@@ -68,7 +72,7 @@ export default function Home() {
                         </Button>
                     </Toolbar>
 
-                    <Dialog open={open} handleClose={handleClose} />
+                    <Dialog open={open} handleClose={handleClose} loadData={loadData} />
                 </AppBar>
             </div>
 

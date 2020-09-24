@@ -5,7 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Coordinate from '../Coordinate/Coordinate'
 import MaskedTextField from '../MaskedTextField'
@@ -13,21 +13,74 @@ import MaskedTextField from '../MaskedTextField'
 interface FormDialogProps {
     open: boolean
     handleClose: () => void
+    loadData: () => void
 }
 
 type Inputs = {
-    cep: number
+    cep: string
     houseNumber: number
-    quantity: number
     latitude: number
     longitude: number
-    quantidade: number
+    quantity: number
 }
 
-export default function FormDialog({ open, handleClose }: FormDialogProps) {
+type InputsString = {
+    cep: string
+    houseNumber: string
+    latitude: string
+    longitude: string
+    quantity: string
+}
+
+const convert = (data: InputsString): Inputs => ({
+    cep: data.cep,
+    houseNumber: parseInt(data.houseNumber, 10),
+    latitude: parseFloat(data.latitude.replaceAll(',', '.')),
+    longitude: parseFloat(data.longitude.replaceAll(',', '.')),
+    quantity: parseInt(data.quantity, 10),
+})
+
+export default function FormDialog({ open, handleClose, loadData }: FormDialogProps) {
+    const [status, setStatus] = useState('idle')
     const { register, handleSubmit, errors } = useForm<Inputs>()
 
-    const onSubmit = (data: Inputs) => console.log(data)
+    const onSubmit = (data: InputsString) => {
+        let foo
+        try {
+            foo = convert(data)
+            console.log('onSubmit', foo)
+        } catch (error) {
+            console.error(error)
+            return
+        }
+
+        setStatus('pending')
+        fetch(
+            'http://localhost:3001/residences', // FIXME .env
+            {
+                method: 'POST',
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(foo),
+            }
+        )
+            .then((res) => res.json())
+            .then((res) => {
+                setStatus('success')
+                console.log('res', res)
+                loadData()
+            })
+            .catch((error) => {
+                setStatus('error')
+                console.error(error)
+            })
+    }
 
     return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -35,7 +88,7 @@ export default function FormDialog({ open, handleClose }: FormDialogProps) {
                 <DialogTitle id="form-dialog-title">Cadastro</DialogTitle>
 
                 <DialogContent>
-                    <DialogContentText>Informe os dados da residência</DialogContentText>
+                    <DialogContentText>Informe os dados da residência {status}</DialogContentText>
 
                     <MaskedTextField
                         name="cep"
