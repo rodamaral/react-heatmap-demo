@@ -1,23 +1,20 @@
 import FormControl from '@material-ui/core/FormControl'
-import React from 'react'
+import React, { Ref } from 'react'
 import MaskedTextField from '../MaskedTextField'
 
 interface CoordinateProps {
     label: string
     id: string
-    onAccept?: (foo: any, bar: any) => void
-    margin?: string
-    fullWidth?: boolean
     min: number
     max: number
     name: string
-    // FIXME
-    inputRef: any
-    error: any
-    helperText: any
-    // inputRef: register<TFieldElement extends FieldElement<TFieldValues>>(ref: (TFieldElement & Ref) | null, rules?: ValidationRules): void;
-    // error={errors.latitude !== undefined}
-    // helperText={errors.latitude?.message}
+    inputRef?: Ref<any>
+    error: boolean
+    helperText: string | undefined
+    disabled?: boolean
+    fullWidth?: boolean
+    margin?: string
+    onAccept?: (value: any, mask: any) => void
 }
 
 export default function FormattedInputs(props: CoordinateProps) {
@@ -26,14 +23,14 @@ export default function FormattedInputs(props: CoordinateProps) {
             <MaskedTextField
                 margin="dense"
                 type="text"
-                mask={Number} // enable number mask
-                scale={6} // digits after point, 0 for integers
-                signed={false} // disallow negative
-                thousandsSeparator="" // any single char
-                padFractionalZeros={false} // if true, then pads zeros at end to the length of scale
-                normalizeZeros={true} // appends or removes zeros at ends
-                radix="," // fractional delimiter
-                mapToRadix={['.']} // symbols to process as radix
+                mask={Number}
+                scale={6}
+                signed={false}
+                thousandsSeparator=""
+                padFractionalZeros={false}
+                normalizeZeros={true}
+                radix=","
+                mapToRadix={['.']}
                 {...props}
             />
         </FormControl>

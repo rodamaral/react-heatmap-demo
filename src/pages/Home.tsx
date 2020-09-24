@@ -7,15 +7,22 @@ import 'leaflet/dist/leaflet.css'
 import { useSnackbar } from 'notistack'
 import React, { useCallback, useEffect, useState } from 'react'
 import Dialog from '../components/Dialog'
-import Map from '../components/Map'
+import Map, { IData } from '../components/Map'
 import { getResidences } from '../services/residences'
 
-const HEADER_HEIGHT = 64 // TODO
+const HEADER_HEIGHT = 64
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        page: {
+            display: 'flex',
+            flexDirection: 'column',
+        },
         root: {
             flexGrow: 1,
+        },
+        appBar: {
+            height: HEADER_HEIGHT,
         },
         menuButton: {
             marginRight: theme.spacing(2),
@@ -23,19 +30,16 @@ const useStyles = makeStyles((theme: Theme) =>
         title: {
             flexGrow: 1,
         },
+        mapWrapper: {
+            height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+        },
     })
 )
-
-interface IData {
-    latitude: number
-    longitude: number
-    quantity: number
-}
 
 export default function Home() {
     const classes = useStyles()
     const [open, setOpen] = useState(false)
-    const [data, setData] = useState<Array<IData>>([])
+    const [data, setData] = useState<IData[]>([])
     const { enqueueSnackbar } = useSnackbar()
 
     const handleClickOpen = () => {
@@ -60,9 +64,9 @@ export default function Home() {
     }, [loadData])
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className={classes.page}>
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" className={classes.appBar}>
                     <Toolbar>
                         <Typography variant="h6" className={classes.title}>
                             Mapa de Calor
@@ -77,7 +81,7 @@ export default function Home() {
                 </AppBar>
             </div>
 
-            <div style={{ height: `calc(100vh - ${HEADER_HEIGHT}px)` }}>
+            <div className={classes.mapWrapper}>
                 <Map data={data} />
             </div>
         </div>

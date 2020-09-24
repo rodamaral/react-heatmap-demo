@@ -1,13 +1,20 @@
 const URL = process.env.REACT_APP_API
 
+export type PostResidenceType = {
+    cep: string
+    houseNumber: number
+    latitude: number
+    longitude: number
+    quantity: number
+}
+
 export const getResidences = async () => {
     const res = await fetch(`${URL}/residences`)
 
     return await res.json()
 }
 
-// FIXME type
-export const postResidence = async (foo: any) => {
+export const postResidence = async (body: PostResidenceType) => {
     const res = await fetch(`${URL}/residences`, {
         method: 'POST',
         mode: 'cors', // no-cors, *cors, same-origin
@@ -18,7 +25,7 @@ export const postResidence = async (foo: any) => {
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(foo),
+        body: JSON.stringify(body),
     })
 
     return await res.json()

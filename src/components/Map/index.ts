@@ -1,3 +1,5 @@
-import Map from './Map';
+import Map, { IData } from './Map'
 
-export default Map;
+export type { IData }
+
+export default Map
