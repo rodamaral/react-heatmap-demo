@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css'
 import React, { useEffect, useState } from 'react'
 import Dialog from '../components/Dialog'
 import Map from '../components/Map'
+import { getResidences } from '../services/residences'
 
 const HEADER_HEIGHT = 64 // TODO
 
@@ -43,15 +44,12 @@ export default function Home() {
         setOpen(false)
     }
 
-    const loadData = () => {
-        fetch('http://localhost:3001/residences') // FIXME .env
-            .then((res) => res.json())
-            .then((res) => {
-                setData(res)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+    const loadData = async () => {
+        try {
+            setData(await getResidences())
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     useEffect(() => {
