@@ -5,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
+import { useSnackbar } from 'notistack'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Coordinate from '../Coordinate/Coordinate'
@@ -33,7 +34,7 @@ type InputsString = {
 }
 
 const convert = (data: InputsString): Inputs => ({
-    cep: data.cep,
+    cep: data.cep.replaceAll('.', '').replaceAll('-', ''),
     houseNumber: parseInt(data.houseNumber, 10),
     latitude: parseFloat(data.latitude.replaceAll(',', '.')),
     longitude: parseFloat(data.longitude.replaceAll(',', '.')),
@@ -42,6 +43,7 @@ const convert = (data: InputsString): Inputs => ({
 
 export default function FormDialog({ open, handleClose, loadData }: FormDialogProps) {
     const [status, setStatus] = useState('idle')
+    const { enqueueSnackbar } = useSnackbar()
     const { register, handleSubmit, errors } = useForm<Inputs>()
 
     const onSubmit = (data: InputsString) => {
@@ -74,17 +76,24 @@ export default function FormDialog({ open, handleClose, loadData }: FormDialogPr
             .then((res) => {
                 setStatus('success')
                 console.log('res', res)
+                enqueueSnackbar('Dados cadastrados com sucesso', { variant: 'success' })
                 loadData()
             })
             .catch((error) => {
                 setStatus('error')
+                enqueueSnackbar('Erro ao salvar dados', { variant: 'error' })
                 console.error(error)
             })
     }
 
     return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate
+                autoComplete="off"
+                aria-disabled={status === 'pending'}
+            >
                 <DialogTitle id="form-dialog-title">Cadastro</DialogTitle>
 
                 <DialogContent>
