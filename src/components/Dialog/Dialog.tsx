@@ -1,4 +1,3 @@
-import { FormControl, FormHelperText, Input, InputLabel } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -6,82 +5,173 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import TextField from '@material-ui/core/TextField'
-import React, { ChangeEvent, useState } from 'react'
-import Cep from '../Cep'
-import Coordinate from '../Cep/Coordinate'
+import { useSnackbar } from 'notistack'
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { postResidence } from '../../services/residences'
+import Coordinate from '../Coordinate/Coordinate'
+import MaskedTextField from '../MaskedTextField'
 
-export default function FormDialog() {
-    const [open, setOpen] = useState(false)
-    const [value, setValue] = useState<string>('')
+interface FormDialogProps {
+    open: boolean
+    handleClose: () => void
+    loadData: () => void
+}
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value)
-    }
+type Inputs = {
+    cep: string
+    houseNumber: number
+    latitude: number
+    longitude: number
+    quantity: number
+}
 
-    const handleClickOpen = () => {
-        setOpen(true)
-    }
+type InputsString = {
+    cep: string
+    houseNumber: string
+    latitude: string
+    longitude: string
+    quantity: string
+}
 
-    const handleClose = () => {
-        setOpen(false)
+const convert = (data: InputsString): Inputs => ({
+    cep: data.cep.replaceAll('.', '').replaceAll('-', ''),
+    houseNumber: parseInt(data.houseNumber, 10),
+    latitude: parseFloat(data.latitude.replaceAll(',', '.')),
+    longitude: parseFloat(data.longitude.replaceAll(',', '.')),
+    quantity: parseInt(data.quantity, 10),
+})
+
+export default function FormDialog({ open, handleClose, loadData }: FormDialogProps) {
+    const [status, setStatus] = useState('idle')
+    const { enqueueSnackbar } = useSnackbar()
+    const { register, handleSubmit, errors } = useForm<Inputs>()
+
+    const onSubmit = async (data: InputsString) => {
+        let convertedData
+        try {
+            convertedData = convert(data)
+            console.log('onSubmit', convertedData)
+        } catch (error) {
+            console.error(error)
+            enqueueSnackbar('Erro de validação', { variant: 'error' })
+            return
+        }
+
+        try {
+            setStatus('pending')
+            await postResidence(convertedData)
+            setStatus('success')
+            enqueueSnackbar('Dados cadastrados com sucesso', { variant: 'success' })
+            loadData()
+        } catch (error) {
+            setStatus('error')
+            enqueueSnackbar('Erro ao salvar dados', { variant: 'error' })
+            console.error(error)
+        }
     }
 
     return (
-        <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Open form dialog
-            </Button>
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate
+                autoComplete="off"
+                aria-disabled={status === 'pending'}
+            >
+                <DialogTitle id="form-dialog-title">Cadastro</DialogTitle>
 
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>Informe os dados da residência</DialogContentText>
+                    <DialogContentText>Informe os dados da residência {status}</DialogContentText>
 
-                    <Cep />
-
-                    <TextField margin="dense" id="number" label="Número" type="number" fullWidth />
-
-                    <Coordinate />
-
-                    <Coordinate />
+                    <MaskedTextField
+                        name="cep"
+                        inputRef={register({
+                            required: 'Campo obrigatório',
+                            pattern: {
+                                value: /[\d]{2}.[\d]{3}-[\d]{3}/,
+                                message: 'CEP inválido',
+                            },
+                        })}
+                        mask="00.000-000"
+                        label="CEP"
+                        id="formatted-text-mask-input"
+                        error={errors.cep !== undefined}
+                        helperText={errors.cep?.message}
+                        radix="."
+                        margin="dense"
+                        fullWidth
+                    />
 
                     <TextField
-                        margin="dense"
+                        name="houseNumber"
+                        inputRef={register({
+                            required: 'Campo obrigatório',
+                            min: {
+                                value: 0,
+                                message: 'Número de casa deve ser inteiro positivo',
+                            },
+                        })}
+                        label="Número"
                         id="number"
-                        label="Quantidade de residentes"
+                        error={errors.houseNumber !== undefined}
+                        helperText={errors.houseNumber?.message}
+                        margin="dense"
                         type="number"
                         fullWidth
                     />
 
-                    <FormControl>
-                        <InputLabel htmlFor="my-input">Email address</InputLabel>
+                    <Coordinate
+                        name="latitude"
+                        inputRef={register({
+                            required: 'Campo obrigatório',
+                        })}
+                        label="Latitude"
+                        id="formatted-text-mask-input"
+                        min={-90}
+                        max={90}
+                        error={errors.latitude !== undefined}
+                        helperText={errors.latitude?.message}
+                        margin="dense"
+                        fullWidth
+                    />
 
-                        <Input id="my-input" aria-describedby="my-helper-text" />
-
-                        <FormHelperText id="my-helper-text">
-                            We'll never share your email.
-                        </FormHelperText>
-                    </FormControl>
+                    <Coordinate
+                        name="longitude"
+                        inputRef={register({
+                            required: 'Campo obrigatório',
+                        })}
+                        label="Longitude"
+                        id="formatted-text-mask-input"
+                        min={-180}
+                        max={180}
+                        error={errors.longitude !== undefined}
+                        helperText={errors.longitude?.message}
+                        margin="dense"
+                        fullWidth
+                    />
 
                     <TextField
-                        error
-                        id="standard-error-helper-text"
-                        label="Error"
-                        defaultValue="Hello World"
-                        helperText="Incorrect entry."
+                        name="quantity"
+                        inputRef={register({ required: true })}
+                        label="Quantidade de residentes"
+                        id="number"
+                        error={errors.quantity !== undefined}
+                        helperText={errors.quantity?.message}
+                        type="number"
+                        margin="dense"
+                        fullWidth
                     />
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>
+                    <Button onClick={handleClose}>Cancelar</Button>
 
-                    <Button onClick={handleClose} color="primary">
-                        Subscribe
+                    <Button type="submit" color="primary">
+                        Cadastrar
                     </Button>
                 </DialogActions>
-            </Dialog>
-        </div>
+            </form>
+        </Dialog>
     )
 }

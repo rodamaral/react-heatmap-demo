@@ -1,3 +1,4 @@
+import { SnackbarProvider } from 'notistack'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
@@ -6,7 +7,9 @@ import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <SnackbarProvider maxSnack={3}>
+            <App />
+        </SnackbarProvider>
     </React.StrictMode>,
     document.getElementById('root')
 )

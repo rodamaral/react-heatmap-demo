@@ -1,29 +1,32 @@
 import FormControl from '@material-ui/core/FormControl'
-import React, { ChangeEvent, useState } from 'react'
+import React from 'react'
 import MaskedTextField from '../MaskedTextField'
 
-export default function FormattedInputs() {
-    const [value, setValue] = useState<string>('')
+interface CoordinateProps {
+    label: string
+    id: string
+    onAccept?: (foo: any, bar: any) => void
+    margin?: string
+    fullWidth?: boolean
+    min: number
+    max: number
+    name: string
+    // FIXME
+    inputRef: any
+    error: any
+    helperText: any
+    // inputRef: register<TFieldElement extends FieldElement<TFieldValues>>(ref: (TFieldElement & Ref) | null, rules?: ValidationRules): void;
+    // error={errors.latitude !== undefined}
+    // helperText={errors.latitude?.message}
+}
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value)
-    }
-
+export default function FormattedInputs(props: CoordinateProps) {
     return (
         <FormControl fullWidth>
             <MaskedTextField
-                label="Latitude"
-                value={value}
-                onChange={handleChange}
-                name="textmask"
-                id="formatted-text-mask-input"
-                onAccept={(value: any, mask: any) => console.log(value)}
                 margin="dense"
-                type="email"
-                fullWidth
-                //
+                type="text"
                 mask={Number} // enable number mask
-                // other options are optional with defaults below
                 scale={6} // digits after point, 0 for integers
                 signed={false} // disallow negative
                 thousandsSeparator="" // any single char
@@ -31,9 +34,7 @@ export default function FormattedInputs() {
                 normalizeZeros={true} // appends or removes zeros at ends
                 radix="," // fractional delimiter
                 mapToRadix={['.']} // symbols to process as radix
-                // additional number interval options (e.g.)
-                min={-90}
-                max={90}
+                {...props}
             />
         </FormControl>
     )
