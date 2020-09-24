@@ -1,0 +1,38 @@
+{
+    "residences": [
+        { "latitude": -37.8869090667, "longitude": 175.3657417333, "quantity": 486 },
+        { "latitude": -37.8894207167, "longitude": 175.4015351167, "quantity": 807 },
+        { "latitude": -37.8927369333, "longitude": 175.4087452333, "quantity": 899 },
+        { "latitude": -37.90585105, "longitude": 175.4453463833, "quantity": 1273 },
+        { "latitude": -37.9064188833, "longitude": 175.4441556833, "quantity": 1258 },
+        { "latitude": -37.90584715, "longitude": 175.4463564333, "quantity": 1279 },
+        { "latitude": -37.9033391333, "longitude": 175.4244005667, "quantity": 1078 },
+        { "latitude": -37.9061991333, "longitude": 175.4492620333, "quantity": 1309 },
+        { "latitude": -37.9058955167, "longitude": 175.4445613167, "quantity": 1261 },
+        { "latitude": -37.88888045, "longitude": 175.39146475, "quantity": 734 },
+        { "latitude": -37.8950811333, "longitude": 175.41079175, "quantity": 928 },
+        { "latitude": -37.88909235, "longitude": 175.3922956333, "quantity": 740 },
+        { "latitude": -37.8889259667, "longitude": 175.3938591667, "quantity": 759 },
+        { "latitude": -37.8876576333, "longitude": 175.3859563833, "quantity": 687 },
+        { "latitude": -37.89027155, "longitude": 175.3973178833, "quantity": 778 },
+        { "latitude": -37.8864473667, "longitude": 175.3806136833, "quantity": 631 },
+        { "latitude": -37.9000262833, "longitude": 175.4183242167, "quantity": 1012 },
+        { "latitude": -37.90036495, "longitude": 175.4189457, "quantity": 1024 },
+        { "latitude": -37.9000976833, "longitude": 175.4197312167, "quantity": 1027 },
+        { "latitude": -37.90239975, "longitude": 175.42371165, "quantity": 1067 },
+        { "latitude": -37.9043379667, "longitude": 175.42430325, "quantity": 1080 },
+        { "latitude": -37.9026441, "longitude": 175.4231055167, "quantity": 1068 },
+        { "latitude": -37.8883536333, "longitude": 175.3888573833, "quantity": 718 },
+        { "latitude": -37.9029948833, "longitude": 175.4237386167, "quantity": 1070 },
+        { "latitude": -37.89824135, "longitude": 175.4150421667, "quantity": 982 },
+        { "latitude": -37.8976067833, "longitude": 175.41510265, "quantity": 983 },
+        { "latitude": -37.9023491333, "longitude": 175.4225495, "quantity": 1066 },
+        {
+            "cep": "58.520-971",
+            "houseNumber": 14,
+            "latitude": -37.8856157167,
+            "longitude": 175.3775632833,
+            "quantity": 608
+        }
+    ]
+}
