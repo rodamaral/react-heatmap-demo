@@ -5,7 +5,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
-import React from 'react'
+import React, { useState } from 'react'
 import { PostResidenceType } from '../../services/residences'
 import Footer from './Footer'
 import Head from './Head'
@@ -17,10 +17,15 @@ const useStyles = makeStyles({
     },
 })
 
-export default function Table({ rows }: { rows: PostResidenceType[] }) {
+interface TableProps {
+    rows: PostResidenceType[]
+    loadData: () => void
+}
+
+export default function Table({ rows, loadData }: TableProps) {
     const classes = useStyles()
-    const [page, setPage] = React.useState(0)
-    const [rowsPerPage, setRowsPerPage] = React.useState(5)
+    const [page, setPage] = useState(0)
+    const [rowsPerPage, setRowsPerPage] = useState(5)
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
     return (
@@ -33,7 +38,7 @@ export default function Table({ rows }: { rows: PostResidenceType[] }) {
                         ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         : rows
                     ).map((row) => (
-                        <Row key={row.id} row={row} />
+                        <Row key={row.id} row={row} loadData={loadData} />
                     ))}
 
                     {emptyRows > 0 && (

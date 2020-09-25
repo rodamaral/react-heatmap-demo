@@ -3,8 +3,8 @@ import 'leaflet/dist/leaflet.css'
 import { useSnackbar } from 'notistack'
 import React, { useCallback, useEffect, useState } from 'react'
 import AppBar from '../components/AppBar'
-import Map, { IData } from '../components/Map'
-import { getResidences } from '../services/residences'
+import Map from '../components/Map'
+import { getResidences, PostResidenceType } from '../services/residences'
 
 const HEADER_HEIGHT = 64
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Home() {
     const classes = useStyles()
-    const [data, setData] = useState<IData[]>([])
+    const [data, setData] = useState<PostResidenceType[]>([])
     const { enqueueSnackbar } = useSnackbar()
 
     const loadData = useCallback(async () => {

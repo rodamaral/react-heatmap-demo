@@ -5,7 +5,12 @@ import React, { useState } from 'react'
 import { PostResidenceType } from '../../services/residences'
 import Table from '../Table'
 
-export default function Home({ data }: { data: PostResidenceType[] }) {
+interface ResidencesTableDialogProps {
+    data: PostResidenceType[]
+    loadData: () => void
+}
+
+export default function ResidencesTableDialog({ data, loadData }: ResidencesTableDialogProps) {
     const [open, setOpen] = useState(false)
 
     const handleClickOpen = () => {
@@ -31,7 +36,7 @@ export default function Home({ data }: { data: PostResidenceType[] }) {
                 <DialogTitle id="form-dialog-title">Residências</DialogTitle>
 
                 <DialogContent>
-                    <Table rows={data} />
+                    <Table rows={data} loadData={loadData} />
                 </DialogContent>
 
                 <DialogActions>

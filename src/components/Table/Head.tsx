@@ -7,6 +7,8 @@ export default function Head() {
     return (
         <TableHead>
             <TableRow>
+                <TableCell padding="checkbox"></TableCell>
+
                 <TableCell>CEP</TableCell>
                 <TableCell align="right">Número</TableCell>
                 <TableCell align="right">Latitude</TableCell>

@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
     <React.StrictMode>
-        <SnackbarProvider maxSnack={3}>
+        <SnackbarProvider maxSnack={5}>
             <App />
         </SnackbarProvider>
     </React.StrictMode>,

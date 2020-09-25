@@ -4,6 +4,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import React, { useState } from 'react'
+import { PostResidenceType } from '../../services/residences'
 import Dialog from '../Dialog'
 import ResidencesTableDialog from '../ResidencesTableDialog'
 
@@ -23,8 +24,12 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 )
 
-// FIXME
-export default function AppBar({ data, loadData }: any) {
+interface AppBarProps {
+    data: PostResidenceType[]
+    loadData: () => void
+}
+
+export default function AppBar({ data, loadData }: AppBarProps) {
     const classes = useStyles()
     const [open, setOpen] = useState(false)
 
@@ -44,7 +49,7 @@ export default function AppBar({ data, loadData }: any) {
                         Mapa de Calor
                     </Typography>
 
-                    <ResidencesTableDialog data={data} />
+                    <ResidencesTableDialog data={data} loadData={loadData} />
 
                     <Button onClick={handleClickOpen} color="inherit">
                         Cadastrar

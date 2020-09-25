@@ -15,10 +15,10 @@ export default function Footer({
     setRowsPerPage,
 }: {
     rows: PostResidenceType[]
-    page: any
-    setPage: any
-    rowsPerPage: any
-    setRowsPerPage: any
+    page: number
+    setPage: (page: number) => void
+    rowsPerPage: number
+    setRowsPerPage: (rows: number) => void
 }) {
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
