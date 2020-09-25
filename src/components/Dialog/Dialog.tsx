@@ -34,7 +34,7 @@ export default function FormDialog({ open, handleClose, loadData }: FormDialogPr
     const [status, setStatus] = useState('idle')
     const { enqueueSnackbar } = useSnackbar()
     const { register, handleSubmit, errors } = useForm<PostResidenceType>()
-    const disabled = useMemo(() => status !== 'pending', [status])
+    const disabled = useMemo(() => status === 'pending', [status])
 
     const onSubmit = async (data: InputsString) => {
         let convertedData
