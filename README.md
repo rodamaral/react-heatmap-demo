@@ -1,13 +1,25 @@
-## Personal template
+## How to install
 
-This is an opinionated starter template which makes use of:
+In order to run this demo, you need to install the following dependencies in the host machine:
 
--   Create React App
--   TypeScript
--   Redux with redux-toolkit
--   React Router
+-   nodejs
+-   json-server
+-   yarn
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Installing node dependencies:
+
+Run in the root directory:
+
+-   yarn install
+
+#### Running in development mode
+
+Make sure the ports `3000` and `3001` are free and run:
+
+-   json-server --watch db.json --port 3001
+-   yarn start
+
+This will open the `http://localhost:3000/` in your browser.
 
 ## Available Scripts
 
