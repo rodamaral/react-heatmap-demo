@@ -1,190 +1,44 @@
 {
-  "residences": [
-    {
-      "id": 1,
-      "latitude": -37.8869090667,
-      "longitude": 175.3657417333,
-      "quantity": 486
-    },
-    {
-      "id": 2,
-      "latitude": -37.8894207167,
-      "longitude": 175.4015351167,
-      "quantity": 807
-    },
-    {
-      "id": 3,
-      "latitude": -37.8927369333,
-      "longitude": 175.4087452333,
-      "quantity": 899
-    },
-    {
-      "id": 4,
-      "latitude": -37.90585105,
-      "longitude": 175.4453463833,
-      "quantity": 1273
-    },
-    {
-      "id": 5,
-      "latitude": -37.9064188833,
-      "longitude": 175.4441556833,
-      "quantity": 1258
-    },
-    {
-      "id": 6,
-      "latitude": -37.90584715,
-      "longitude": 175.4463564333,
-      "quantity": 1279
-    },
-    {
-      "id": 7,
-      "latitude": -37.9033391333,
-      "longitude": 175.4244005667,
-      "quantity": 1078
-    },
-    {
-      "id": 8,
-      "latitude": -37.9061991333,
-      "longitude": 175.4492620333,
-      "quantity": 1309
-    },
-    {
-      "id": 9,
-      "latitude": -37.9058955167,
-      "longitude": 175.4445613167,
-      "quantity": 1261
-    },
-    {
-      "id": 10,
-      "latitude": -37.88888045,
-      "longitude": 175.39146475,
-      "quantity": 734
-    },
-    {
-      "id": 11,
-      "latitude": -37.8950811333,
-      "longitude": 175.41079175,
-      "quantity": 928
-    },
-    {
-      "id": 12,
-      "latitude": -37.88909235,
-      "longitude": 175.3922956333,
-      "quantity": 740
-    },
-    {
-      "id": 13,
-      "latitude": -37.8889259667,
-      "longitude": 175.3938591667,
-      "quantity": 759
-    },
-    {
-      "id": 14,
-      "latitude": -37.8876576333,
-      "longitude": 175.3859563833,
-      "quantity": 687
-    },
-    {
-      "id": 15,
-      "latitude": -37.89027155,
-      "longitude": 175.3973178833,
-      "quantity": 778
-    },
-    {
-      "id": 16,
-      "latitude": -37.8864473667,
-      "longitude": 175.3806136833,
-      "quantity": 631
-    },
-    {
-      "id": 17,
-      "latitude": -37.9000262833,
-      "longitude": 175.4183242167,
-      "quantity": 1012
-    },
-    {
-      "id": 18,
-      "latitude": -37.90036495,
-      "longitude": 175.4189457,
-      "quantity": 1024
-    },
-    {
-      "id": 19,
-      "latitude": -37.9000976833,
-      "longitude": 175.4197312167,
-      "quantity": 1027
-    },
-    {
-      "id": 20,
-      "latitude": -37.90239975,
-      "longitude": 175.42371165,
-      "quantity": 1067
-    },
-    {
-      "id": 21,
-      "latitude": -37.9043379667,
-      "longitude": 175.42430325,
-      "quantity": 1080
-    },
-    {
-      "id": 22,
-      "latitude": -37.9026441,
-      "longitude": 175.4231055167,
-      "quantity": 1068
-    },
-    {
-      "id": 23,
-      "latitude": -37.8883536333,
-      "longitude": 175.3888573833,
-      "quantity": 718
-    },
-    {
-      "id": 24,
-      "latitude": -37.9029948833,
-      "longitude": 175.4237386167,
-      "quantity": 1070
-    },
-    {
-      "id": 25,
-      "latitude": -37.89824135,
-      "longitude": 175.4150421667,
-      "quantity": 982
-    },
-    {
-      "id": 26,
-      "latitude": -37.8976067833,
-      "longitude": 175.41510265,
-      "quantity": 983
-    },
-    {
-      "id": 27,
-      "latitude": -37.9023491333,
-      "longitude": 175.4225495,
-      "quantity": 1066
-    },
-    {
-      "cep": "76.543-217",
-      "houseNumber": 17,
-      "latitude": -37.943567,
-      "longitude": 175.543219,
-      "quantity": 4321,
-      "id": 28
-    },
-    {
-      "cep": "89.321-837",
-      "houseNumber": 2,
-      "latitude": -37.123456,
-      "longitude": 175.871232,
-      "quantity": 999,
-      "id": 29
-    },
-    {
-      "cep": "89.321-834",
-      "houseNumber": 4,
-      "latitude": -37.123499,
-      "longitude": 175.871762,
-      "quantity": 1030,
-      "id": 30
-    }
-  ]
+    "residences": [
+        {
+            "id": 1,
+            "cep": "12345678",
+            "houseNumber": 2,
+            "latitude": -27.573237,
+            "longitude": -48.537469,
+            "quantity": 3
+        },
+        {
+            "id": 2,
+            "cep": "29876543",
+            "houseNumber": 2,
+            "latitude": -27.579237,
+            "longitude": -48.537969,
+            "quantity": 4
+        },
+        {
+            "id": 3,
+            "cep": "29476543",
+            "houseNumber": 2,
+            "latitude": -27.575237,
+            "longitude": -48.538269,
+            "quantity": 7
+        },
+        {
+            "id": 4,
+            "cep": "29876743",
+            "houseNumber": 2,
+            "latitude": -27.573000,
+            "longitude": -48.527969,
+            "quantity": 1
+        },
+        {
+            "id": 5,
+            "cep": "19876543",
+            "houseNumber": 2,
+            "latitude": -27.57345,
+            "longitude": -48.537666,
+            "quantity": 10
+        }
+    ]
 }
