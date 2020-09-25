@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import React, { useState } from 'react'
 import Dialog from '../Dialog'
+import ResidencesTableDialog from '../ResidencesTableDialog'
 
 const HEADER_HEIGHT = 64
 
@@ -22,7 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 )
 
-export default function Home({ loadData }: any) {
+// FIXME
+export default function AppBar({ data, loadData }: any) {
     const classes = useStyles()
     const [open, setOpen] = useState(false)
 
@@ -42,12 +44,13 @@ export default function Home({ loadData }: any) {
                         Mapa de Calor
                     </Typography>
 
+                    <ResidencesTableDialog data={data} />
+
                     <Button onClick={handleClickOpen} color="inherit">
                         Cadastrar
                     </Button>
+                    <Dialog open={open} handleClose={handleClose} loadData={loadData} />
                 </Toolbar>
-
-                <Dialog open={open} handleClose={handleClose} loadData={loadData} />
             </MuiAppBar>
         </div>
     )

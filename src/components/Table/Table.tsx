@@ -1,3 +1,4 @@
+import { TableHead } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import Paper from '@material-ui/core/Paper'
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles'
@@ -13,6 +14,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import LastPageIcon from '@material-ui/icons/LastPage'
 import React from 'react'
+import { PostResidenceType } from '../../services/residences'
 
 const useStyles1 = makeStyles((theme: Theme) =>
     createStyles({
@@ -111,11 +113,13 @@ const useStyles2 = makeStyles({
     },
 })
 
-export default function CustomPaginationActionsTable() {
+// FIXME
+export default function CustomPaginationActionsTable({ data }: { data: PostResidenceType[] }) {
     const classes = useStyles2()
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
+    let rows = data
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
     const handleChangePage = (
@@ -132,23 +136,42 @@ export default function CustomPaginationActionsTable() {
         setPage(0)
     }
 
+    // console.log('data', data)
+    // console.log('rows', rows)
+
     return (
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="custom pagination table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>CEP</TableCell>
+                        <TableCell align="right">Número</TableCell>
+                        <TableCell align="right">Latitude</TableCell>
+                        <TableCell align="right">Longitude</TableCell>
+                        <TableCell align="right">Quantidade de Residentes</TableCell>
+                    </TableRow>
+                </TableHead>
+
                 <TableBody>
                     {(rowsPerPage > 0
                         ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         : rows
                     ).map((row) => (
-                        <TableRow key={row.name}>
+                        <TableRow key={row.id}>
                             <TableCell component="th" scope="row">
-                                {row.name}
+                                {row.cep || '-'}
+                            </TableCell>
+                            <TableCell style={{ width: 100 }} align="right">
+                                {row.houseNumber || '-'}
+                            </TableCell>
+                            <TableCell style={{ width: 200 }} align="right">
+                                {row.latitude}
+                            </TableCell>
+                            <TableCell style={{ width: 200 }} align="right">
+                                {row.longitude}
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
-                                {row.calories}
-                            </TableCell>
-                            <TableCell style={{ width: 160 }} align="right">
-                                {row.fat}
+                                {row.quantity}
                             </TableCell>
                         </TableRow>
                     ))}

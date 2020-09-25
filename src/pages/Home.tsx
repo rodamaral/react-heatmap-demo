@@ -40,7 +40,7 @@ export default function Home() {
 
     return (
         <div className={classes.page}>
-            <AppBar />
+            <AppBar data={data} loadData={loadData} />
 
             <div className={classes.mapWrapper}>
                 <Map data={data} />

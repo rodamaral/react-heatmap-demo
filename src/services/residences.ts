@@ -1,6 +1,7 @@
 const URL = process.env.REACT_APP_API
 
 export type PostResidenceType = {
+    id?: number
     cep: string
     houseNumber: number
     latitude: number
